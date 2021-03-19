@@ -79,7 +79,7 @@ public class GenericResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response put(Persona p) {
         if (repository.actualizar(p)) {
-            return Response.status(200).entity("addPerson id:" + p.getId() + "name: " + p.getNombre() + ", lastName:" + p.getApellido()).build();
+            return Response.status(200).entity("UpDate Person id: " + p.getId() + " name: " + p.getNombre() + ", lastName:" + p.getApellido()).build();
         }
         return Response.status(404).build();
     }
@@ -102,6 +102,18 @@ public class GenericResource {
     public Response delete(Persona p) {
         if (repository.eliminar(p.getId())) {
             return Response.status(200).entity("Has been deleted: "+p.getId()).build();
+        }
+        return Response.status(404).build();
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("id") String idPersona) {
+        //TODO return proper representation object
+        
+        if (repository.eliminar(new Long(idPersona))) {
+            return Response.status(200).entity("Has been deleted: "+idPersona).build();
         }
         return Response.status(404).build();
     }
